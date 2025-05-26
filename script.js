@@ -12,7 +12,7 @@ const allQuotes = [
   'whoa!,you just completed all the goals, time for chill '
 ]
 
-const allGoals = JSON.parse(localStorage.getItem('allGoals'))|| {}
+const allGoals = JSON.parse(localStorage.getItem('allGoals')) || {}
 let completedGoalsCount = Object.values(allGoals).filter((goal) => goal.completed).length
 
 
@@ -38,41 +38,72 @@ checkBoxList.forEach((checkbox) => {
       progressLabel.innerText = allQuotes[completedGoalsCount]
 
       localStorage.setItem('allGoals', JSON.stringify(allGoals))
-      
+
     } else {
-        progressBar.classList.add('show-error')
+      progressBar.classList.add('show-error')
     }
   })
 })
 
 inputFields.forEach((input) => {
-   if (allGoals[input.id]) {
-     input.value = allGoals[input.id].name
+  input.value = allGoals[input.id].name
 
-     if (allGoals[input.id].completed){
-        input.parentElement.classList.add('completed')
-     }
-   } else {
-     input.value = ''
-   }
+  if (allGoals[input.id].completed) {
+    input.parentElement.classList.add('completed')
+  }
 
-    input.addEventListener('focus', () => {
-      progressBar.classList.remove('show-error')
-    })
+  input.addEventListener('focus', () => {
+    progressBar.classList.remove('show-error')
 
-    input.addEventListener('input',(e)=>{
-     if (allGoals[input.id] && allGoals[input.id].completed){
-       input.value= allGoals[input.id].name
-       return
-      }
+  })
 
-      allGoals[input.id] ={
-        name:input.value,
-        completed:false,
-      }
+  input.addEventListener('input', (e) => {
+    if (allGoals[input.id].completed) {
+      input.value = allGoals[input.id].name
+      return
+    }
 
-      localStorage.setItem('allGoals', JSON.stringify(allGoals))
-    })
+    allGoals[input.id] = {
+      name: input.value,
+      completed: false,
+    }
 
-
+    localStorage.setItem('allGoals', JSON.stringify(allGoals))
+  })
 })
+
+
+
+
+// inputFields.forEach((input) => {
+//    if (allGoals[input.id]) {
+//      input.value = allGoals[input.id].name
+
+//      if (allGoals[input.id].completed){
+//         input.parentElement.classList.add('completed')
+//      }
+//    } else {
+//      input.value = ''
+//    }
+
+//     input.addEventListener('focus', () => {
+//       progressBar.classList.remove('show-error')
+//     })
+
+//     input.addEventListener('input',(e)=>{
+//      if (allGoals[input.id] && allGoals[input.id].completed){
+//        input.value= allGoals[input.id].name
+//        return
+//       }
+
+//       allGoals[input.id] ={
+//         name:input.value,
+//         completed:false,
+//       }
+
+//       localStorage.setItem('allGoals', JSON.stringify(allGoals))
+//     })
+
+
+// })
+
