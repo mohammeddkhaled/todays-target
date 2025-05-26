@@ -61,10 +61,12 @@ main {
   display: flex;
   align-items: center;
   overflow: hidden;
+  transition: width 0.3s ease;
 }
 
 .progress-value span {
   padding-left: 20px;
+  min-width:max-content; 
 }
 
 .error-label {
@@ -90,19 +92,16 @@ main {
 }
 
 .custom-checkbox {
-  width: 24px;
-  height: 24px;
   border: 2px solid rgba(97, 72, 28, 0.3);
   border-radius: 50%;
-  flex-shrink: 0;
   cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
+
+ 
 }
 
 .check-icon {
-    display: none;
+   display: none;
 }
 
 .goal-input {
@@ -134,8 +133,8 @@ main {
 }
 
 .completed .custom-checkbox {
-    background: #48A300;
-    border-color: #48A300;
+  background: #48A300;
+  border-color: #48A300;
 }
 
 .completed .check-icon {
