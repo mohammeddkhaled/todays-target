@@ -4,6 +4,8 @@ const errorLabel = document.querySelector('.error-label')
 const progressBar = document.querySelector('.progress-bar')
 const progressValue = document.querySelector('.progress-value')
 
+const allGoals = JSON.parse(localStorage.getItem('allGoals'))|| {}
+
 checkBoxList.forEach((checkbox) => {
   checkbox.addEventListener('click', (e) => {
     const allGoalsAdded = [...inputFields].every(function (input) {
@@ -20,7 +22,18 @@ checkBoxList.forEach((checkbox) => {
 })
 
 inputFields.forEach((input) => {
+   input.value = allGoals[input.id].name
+
     input.addEventListener('focus', () => {
         progressBar.classList.remove('show-error')
     })
+    input.addEventListener('input',(e)=>{
+      allGoals[input.id] ={
+        name:input.value,
+        completed:false,
+      }
+      localStorage.setItem('allGoals', JSON.stringify(allGoals))
+    })
+
+
 })
