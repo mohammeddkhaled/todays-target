@@ -92,6 +92,8 @@ main {
 }
 
 .custom-checkbox {
+  width: 30px;
+  height: 30px;
   border: 2px solid rgba(97, 72, 28, 0.3);
   border-radius: 50%;
   cursor: pointer;
