@@ -1,14 +1,24 @@
 const checkBoxList = document.querySelectorAll('.custom-checkbox')
 const inputFields = document.querySelectorAll('.goal-input')
 const errorLabel = document.querySelector('.error-label')
+const progressLabel = document.querySelector('.progress-label')
 const progressBar = document.querySelector('.progress-bar')
 const progressValue = document.querySelector('.progress-value')
 
-const allGoals = JSON.parse(localStorage.getItem('allGoals'))|| {}
+const allQuotes = [
+  'raise the bar by completing your goals',
+  'well begun is half done',
+  'just astep away, keep going',
+  'whoa!,you just completed all the goals, time for chill '
+]
 
+const allGoals = JSON.parse(localStorage.getItem('allGoals'))|| {}
 let completedGoalsCount = Object.values(allGoals).filter((goal) => goal.completed).length
 
+
 progressValue.style.width = `${(completedGoalsCount / Object.keys(allGoals).length) * 100}%`
+progressValue.firstElementChild.innerText = `${completedGoalsCount}/3 completed`
+progressLabel.innerText = allQuotes[completedGoalsCount]
 
 
 checkBoxList.forEach((checkbox) => {
@@ -22,9 +32,13 @@ checkBoxList.forEach((checkbox) => {
       const inputId = checkbox.nextElementSibling.id
       allGoals[inputId].completed = !allGoals[inputId].completed
       completedGoalsCount = Object.values(allGoals).filter((goal) => goal.completed).length
+
       progressValue.style.width = `${(completedGoalsCount / Object.keys(allGoals).length) * 100}%`
       progressValue.firstElementChild.innerText = `${completedGoalsCount}/3 completed`
+      progressLabel.innerText = allQuotes[completedGoalsCount]
+
       localStorage.setItem('allGoals', JSON.stringify(allGoals))
+      
     } else {
         progressBar.classList.add('show-error')
     }
@@ -32,10 +46,14 @@ checkBoxList.forEach((checkbox) => {
 })
 
 inputFields.forEach((input) => {
-   input.value = allGoals[input.id].name
+   if (allGoals[input.id]) {
+     input.value = allGoals[input.id].name
 
-   if (allGoals[input.id].completed){
-      input.parentElement.classList.add('completed')
+     if (allGoals[input.id].completed){
+        input.parentElement.classList.add('completed')
+     }
+   } else {
+     input.value = ''
    }
 
     input.addEventListener('focus', () => {
@@ -43,11 +61,10 @@ inputFields.forEach((input) => {
     })
 
     input.addEventListener('input',(e)=>{
-     if (allGoals[input.id].completed){
+     if (allGoals[input.id] && allGoals[input.id].completed){
        input.value= allGoals[input.id].name
        return
       }
-
 
       allGoals[input.id] ={
         name:input.value,
